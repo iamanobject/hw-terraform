@@ -12,7 +12,6 @@ boot_disk {
 }
 
   network_interface {
-    # A default network is created for all GCP projects
     network = google_compute_network.vpc_network.self_link
     access_config {
     }
@@ -23,7 +22,25 @@ service_account {
 }
 }
 
+resource "google_compute_firewall" "default" {
+  name    = "hw-firewall"
+  network = google_compute_network.vpc_network.name
+
+  allow {
+      protocol = "tcp"
+      ports = ["22"]
+  }
+  allow {
+    protocol = "tcp"
+    ports    = ["80-9090"]
+  }
+}
+
 resource "google_compute_network" "vpc_network" {
   name                    = "my-network-23"
   auto_create_subnetworks = "true"
+}
+
+output "ip_addr" {
+  value = "${google_compute_instance.default.*.network_interface.0.access_config.0.nat_ip}"
 }

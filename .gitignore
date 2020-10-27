@@ -3,3 +3,4 @@ secrets.json
 .git
 *.tfstate
 *.tfstate.backup
+.terraform.tfstate.lock.info
