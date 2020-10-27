@@ -1,6 +1,6 @@
 
 variable "path" {
-  default     = "C:/terraform/hw"
+  default     = "C:/terraform/hw/hw-terraform"
 }
 
 
