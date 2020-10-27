@@ -17,6 +17,23 @@ boot_disk {
     }
   }
 
+metadata = {
+    ssh-keys = "burnashowserega:${file("C:/Users/user/.ssh/id_rsa.pub")}"
+}
+
+provisioner "remote-exec" {
+    inline = [
+          "echo ${self.network_interface.0.access_config.0.nat_ip} >> ~/IP-address.txt"
+      ]
+
+    connection {
+          type = "ssh"
+          user = "burnashowserega"
+          private_key = file("~/.ssh/id_rsa")
+          host = self.network_interface.0.access_config.0.nat_ip
+    }
+}
+
 service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
 }
