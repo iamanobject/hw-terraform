@@ -34,9 +34,6 @@ provisioner "remote-exec" {
     }
 }
 
-service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
-}
 }
 
 resource "google_compute_firewall" "default" {
@@ -47,6 +44,11 @@ resource "google_compute_firewall" "default" {
       protocol = "tcp"
       ports = ["22"]
   }
+
+  allow {
+      protocol = "icmp"
+  }
+
   allow {
     protocol = "tcp"
     ports    = ["80-9090"]
